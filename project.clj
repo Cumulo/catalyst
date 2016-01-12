@@ -7,7 +7,9 @@
                  [org.clojure/clojurescript "1.7.228"]
                  [reagent "0.5.1"]
                  [hiccup "1.0.5"]
-                 [binaryage/devtools "0.4.1"]]
+                 [binaryage/devtools "0.4.1"]
+                 [differ "0.2.1"]
+                 [org.clojure/core.async "0.2.374"]]
   :plugins [[cirru/lein-sepal "0.0.15"]
             [mvc-works/lein-html-entry "0.0.2"]
             [lein-cljsbuild "1.1.2"]
@@ -41,5 +43,6 @@
                                                 :output-dir "target/server_prod"
                                                 :target :nodejs
                                                 :optimizations :simple}}}}
-  :figwheel {:css-dirs ["resources/public/css"]}
+  :figwheel {:css-dirs ["resources/public/css"]
+             :load-warninged-code false}
   :profiles {:uberjar {:aot :all}})

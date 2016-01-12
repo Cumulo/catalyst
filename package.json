@@ -10,9 +10,23 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "jiyinyiyong",
   "license": "ISC",
   "devDependencies": {
+    "shortid": "^2.2.4",
+    "source-map-support": "^0.4.0",
     "ws": "^1.0.1"
-  }
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Cumulo/catalyst.git"
+  },
+  "keywords": [
+    "cumulo"
+  ],
+  "bugs": {
+    "url": "https://github.com/Cumulo/catalyst/issues"
+  },
+  "homepage": "https://github.com/Cumulo/catalyst#readme"
 }
