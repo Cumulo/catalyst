@@ -6,7 +6,7 @@ ns catalyst.core
   :require
     [] reagent.core :as r
     [] catalyst.ws-client :as ws-client
-    [] catalyst.components :as components
+    [] catalyst.component :as component
     [] differ.core :as differ
     [] devtools.core :as devtools
 
@@ -17,13 +17,19 @@ devtools/install!
 
 defonce data-center $ r/atom $ {}
 
-go
-  reset! data-center $ differ/patch @data-center (<! ws-client/receive-chan)
-  println @data-center ws-client/send-chan
+defn send (action-type action-data)
+  go
+    >! ws-client/send-chan $ {} :type action-type :data action-data
 
 defn mountit ()
   r/render-component
-    [] components/page @data-center
+    [] component/page @data-center send
     .querySelector js/document |#app
 
 mountit
+
+go $ loop ([])
+  reset! data-center $ differ/patch @data-center (<! ws-client/receive-chan)
+  .info js/console "|store:" @data-center
+  mountit
+  recur

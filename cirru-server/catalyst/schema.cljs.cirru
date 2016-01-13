@@ -15,3 +15,4 @@ def task $ {}
 
 def state $ {}
   :user-id nil
+  :counter 0

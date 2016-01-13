@@ -51,7 +51,6 @@ def wss $ new WebSocketServer (js-obj |port 4005)
 go $ loop ([]) $ let
     msg-pack $ <! send-chan
     socket $ get @socket-registry (:target msg-pack)
-  println socket msg-pack
-  println @socket-registry
+  println |changes msg-pack
   .send socket $ pr-str (:changes msg-pack)
   recur

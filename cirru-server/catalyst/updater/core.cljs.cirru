@@ -9,5 +9,6 @@ defn updater (db action-type action-data action-meta)
       handler $ case action-type
         :state/connect up-state/connect
         :state/disconnect up-state/disconnect
+        :state/counter-add up-state/counter-add
         , identity
     handler db action-data action-meta

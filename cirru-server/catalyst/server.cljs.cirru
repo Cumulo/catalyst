@@ -20,9 +20,7 @@ defn -main ()
   println "|server started"
 set! *main-cli-fn* -main
 
-defonce data-center $ atom $ {}
-  :initial schema/database
-  :actions $ []
+defonce data-center $ atom schema/database
 
 defonce client-caches $ atom $ {}
 
@@ -37,6 +35,8 @@ go $ loop ([]) $ let
         new-store $ expand new-data state-id
         old-store $ or (get @client-caches state-id) ({})
         changes $ differ/diff old-store new-store
+      println "|old-store" old-store "|->" new-store "|∆:" changes
       >! ws-server/send-chan $ {} :target state-id :changes changes
-  swap! data-center assoc :initial new-data
+      swap! client-caches assoc state-id new-store
+  reset! data-center new-data
   recur

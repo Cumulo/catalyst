@@ -20,7 +20,7 @@
   :main ^:skip-aot catalyst.core
   :target-path "target/%s"
   :cljsbuild {:builds {:web-dev {:source-paths ["src"]
-                             :figwheel {:websocket-host "192.168.4.104"}
+                             :figwheel {:websocket-host "repo"}
                              :compiler {:main "catalyst.core"
                                         :asset-path "cljs/out"
                                         :output-to  "resources/public/cljs/main.js"
