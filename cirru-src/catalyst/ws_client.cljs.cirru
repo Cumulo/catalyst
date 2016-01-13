@@ -14,8 +14,9 @@ defonce receive-chan $ chan
 
 def ws $ new js/WebSocket |ws://localhost:4005
 
+enable-console-print!
 set! (.-onopen ws) $ fn ()
-  .log js/console "|socket opened"
+  println "|socket opened"
 
 set! (.-onmessage ws) $ fn (event)
   let

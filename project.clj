@@ -45,4 +45,5 @@
                                                 :optimizations :simple}}}}
   :figwheel {:css-dirs ["resources/public/css"]
              :load-warninged-code false}
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}}
+  :parallel-build true)
