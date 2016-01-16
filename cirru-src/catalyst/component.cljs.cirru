@@ -17,6 +17,26 @@ defn vspace (x)
     {} :style
       merge la/vspace $ {} :height x
 
+defn task-comp ()
+  let
+      draft $ atom |
+      local-time $ atom 1
+    fn (task send)
+      let
+          on-remove-task $ fn (event)
+            send :task/remove (:id task)
+          on-change $ fn (event)
+            reset! draft (.-value (.-target event))
+            reset! local-time $ .valueOf (new js/Date)
+            send :task/text $ {} :id (:id task) :text (.-value (.-target event))
+        [] :div ({} :style wi/task)
+          [] :input $ {}
+            :style wi/textbox
+            :value $ if (> @local-time (:time task)) @draft (:text task)
+            :on-change on-change
+          hspace 10
+          [] :div ({} :style wi/icon :on-click on-remove-task) |✕
+
 defn page (store send)
   let
       draft $ r/atom |
@@ -27,13 +47,14 @@ defn page (store send)
           do
             send :task/create @draft
             reset! draft |
-    fn () $ [] :div ({} :style (merge la/fullscreen la/center-content))
+    fn () $ [] :div ({} :style la/fullscreen)
       [] :div ({} :style wi/app)
         [] :input ({} :style wi/textbox :value @draft :on-change on-draft-change :placeholder "|draft")
         hspace 10
         [] :button ({} :style wi/button :on-click on-create) |Submit
-        map
-          fn (entry)
-            [] :div ({} :key (get entry 0) :style wi/task)
-              [] :input $ {} :value (:text (get entry 1)) :style wi/textbox
-          :tasks @store
+        ->> (:tasks @store)
+          map $ fn (entry) (get entry 1)
+          sort-by $ fn (task) (- 0 (:time task))
+          map $ fn (task)
+            [] :div ({} :key (:id task))
+              [] task-comp task send

@@ -12,6 +12,8 @@ defn updater (db action-type action-data action-meta)
         :state/disconnect up-state/disconnect
 
         :task/create up-task/create
+        :task/remove up-task/remove-one
+        :task/text up-task/text
 
         , identity
     handler db action-data action-meta

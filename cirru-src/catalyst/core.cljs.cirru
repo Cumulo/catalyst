@@ -18,6 +18,7 @@ devtools/install!
 defonce data-center $ r/atom $ {}
 
 defn send (action-type action-data)
+  println action-type action-data
   go
     >! ws-client/send-chan $ {} :type action-type :data action-data
 
@@ -29,7 +30,9 @@ defn mountit ()
 mountit
 
 go $ loop ([])
-  reset! data-center $ differ/patch @data-center (<! ws-client/receive-chan)
-  .info js/console "|store:" @data-center
-  mountit
-  recur
+  let
+      changes $ <! ws-client/receive-chan
+    reset! data-center $ differ/patch @data-center changes
+    .info js/console "|∆" changes
+    mountit
+    recur

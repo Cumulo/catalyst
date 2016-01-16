@@ -35,7 +35,7 @@ go $ loop ([]) $ let
         new-store $ expand new-data state-id
         old-store $ or (get @client-caches state-id) ({})
         changes $ differ/diff old-store new-store
-      println "|old-store" old-store "|->" new-store "|∆:" changes
+      println "|∆" changes
       >! ws-server/send-chan $ {} :target state-id :changes changes
       swap! client-caches assoc state-id new-store
   reset! data-center new-data

@@ -12,6 +12,7 @@ def task $ {}
   :text |
   :done false
   :id nil
+  :time nil
 
 def state $ {}
   :user-id nil
