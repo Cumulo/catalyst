@@ -8,7 +8,8 @@
                  [reagent "0.5.1"]
                  [hiccup "1.0.5"]
                  [binaryage/devtools "0.4.1"]
-                 [differ "0.2.1"]
+                 [differ "0.2.2"]
+                 [mvc-works/hsl "0.1.1"]
                  [org.clojure/core.async "0.2.374"]]
   :plugins [[cirru/lein-sepal "0.0.15"]
             [mvc-works/lein-html-entry "0.0.2"]
@@ -21,7 +22,7 @@
   :target-path "target/%s"
   :cljsbuild {:builds {:web-dev {:source-paths ["src"]
                              :figwheel {:websocket-host "repo"}
-                             :compiler {:main "catalyst.core"
+                             :compiler {:main catalyst.core
                                         :asset-path "cljs/out"
                                         :output-to  "resources/public/cljs/main.js"
                                         :output-dir "resources/public/cljs/out"}}
@@ -32,7 +33,7 @@
                        :server-dev {:source-paths ["server"]
                                     :figwheel true
                                     :compiler {
-                                      :main "catalyst.server"
+                                      :main catalyst.server
                                       :output-to "target/server.js"
                                       :output-dir "target/server_dev"
                                       :target :nodejs

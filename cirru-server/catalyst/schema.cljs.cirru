@@ -16,3 +16,8 @@ def task $ {}
 def state $ {}
   :user-id nil
   :counter 0
+
+def store $ {}
+  :state state
+  :tasks (:tasks database)
+  :users (:users database)

@@ -23,7 +23,7 @@ defn send (action-type action-data)
 
 defn mountit ()
   r/render-component
-    [] component/page @data-center send
+    [] component/page data-center send
     .querySelector js/document |#app
 
 mountit

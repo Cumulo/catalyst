@@ -12,9 +12,3 @@ defn connect (db action-data action-meta)
 defn disconnect (db action-data action-meta)
   update db :states $ fn (states)
     dissoc states (:state-id action-meta)
-
-defn counter-add (db action-data action-meta)
-  println "|calling counter-add"
-  update-in db
-    [] :states (:state-id action-meta) :counter
-    , inc

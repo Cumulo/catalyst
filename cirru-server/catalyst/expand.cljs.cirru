@@ -2,6 +2,10 @@
 ns catalyst.expand
   :require
     [] cljs.nodejs :as nodejs
+    [] catalyst.schema :as schema
 
 defn expand (db state-id)
-  get-in db $ [] :states state-id
+  assoc schema/store
+    , :state $ get-in db $ [] :states state-id
+    , :tasks $ :tasks db
+    , :users $ :users db
