@@ -37,24 +37,26 @@ defn task-comp ()
           hspace 10
           [] :div ({} :style wi/icon :on-click on-remove-task) |✕
 
-defn page (store send)
+defn page ()
   let
       draft $ r/atom |
       on-draft-change $ fn (event)
         reset! draft (-> event .-target .-value)
-      on-create $ fn (event)
-        if (> (count @draft) 0)
-          do
-            send :task/create @draft
-            reset! draft |
-    fn () $ [] :div ({} :style la/fullscreen)
-      [] :div ({} :style wi/app)
-        [] :input ({} :style wi/textbox :value @draft :on-change on-draft-change :placeholder "|draft")
-        hspace 10
-        [] :button ({} :style wi/button :on-click on-create) |Submit
-        ->> (:tasks @store)
-          map $ fn (entry) (get entry 1)
-          sort-by $ fn (task) (- 0 (:time task))
-          map $ fn (task)
-            [] :div ({} :key (:id task))
-              [] task-comp task send
+    fn (store send)
+      let
+          on-create $ fn (event)
+            if (> (count @draft) 0)
+              do
+                send :task/create @draft
+                reset! draft |
+        [] :div ({} :style la/fullscreen)
+          [] :div ({} :style wi/app)
+            [] :input ({} :style wi/textbox :value @draft :on-change on-draft-change :placeholder "|draft")
+            hspace 10
+            [] :button ({} :style wi/button :on-click on-create) |Submit
+            ->> (:tasks store)
+              map $ fn (entry) (get entry 1)
+              sort-by $ fn (task) (- 0 (:time task))
+              map $ fn (task)
+                [] :div ({} :key (:id task))
+                  [] task-comp task send
